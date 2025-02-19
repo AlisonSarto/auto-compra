@@ -11,10 +11,15 @@ id_loja_fabrica = 399776
 
 access_token = os.getenv('ACCESS_TOKEN')
 secret_access_token = os.getenv('SECRET_ACCESS_TOKEN')
+token = os.getenv('TOKEN')
 
 headers = {
     'access-token': access_token,
     'secret-access-token': secret_access_token
+}
+
+headers_system = {
+    'token': token,
 }
 
 def realizar_operacoes():
@@ -110,6 +115,9 @@ def realizar_operacoes():
 
     #? Faz a venda da loja Fabrica
     response = requests.post('https://api.beteltecnologia.com/vendas', json=json, headers=headers)
+
+    #? Sincroniza o System
+    response = requests.get('https://www.alohasystem.com.br/api/pacotes/integration/sync', headers=headers)
 
     data_atual = datetime.now()
     data_atual = data_atual.strftime('%d/%m/%Y %H:%M:%S')
